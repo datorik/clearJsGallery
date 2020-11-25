@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        let galleryImagesList = {
+            'car_1.jpg': {
+                name: 'Car 1',
+                linkText: 'Car 1 link',
+                link: '/',
+                hashtag: ['CAR']
+            },
+            'car_2.jpg': {
+                name: 'Car 2',
+                linkText: 'Car 2 link',
+                link: '/',
+                hashtag: ['CAR']
+            },
+            'car_3.jpg': {
+                name: 'Car 3',
+                linkText: 'Car 3 link',
+                link: '/',
+                hashtag: ['CAR', 'ROAD']
+            },
+            'road_1.jpg': {
+                name: 'Road 1',
+                linkText: 'Road 1 link',
+                link: '/',
+                hashtag: ['ROAD']
+            },
+            'road_2.jpg': {
+                name: 'Road 2',
+                linkText: 'Road 2 link',
+                link: '/',
+                hashtag: ['CAR', 'ROAD']
+            },
+            'forest_1.jpg': {
+                name: 'Forest 1',
+                linkText: 'Forest 1 link',
+                link: '/',
+                hashtag: ['FOREST']
+            },
+            'forest_2.jpg': {
+                name: 'Forest 3',
+                linkText: 'Forest 2 link',
+                link: '/',
+                hashtag: ['FOREST', 'CAR', 'ROAD']
+            },
+            'forest_3.jpg': {
+                name: 'Forest 3',
+                linkText: 'Forest 3 link',
+                link: '/',
+                hashtag: ['FOREST', 'CAR', 'ROAD']
+            }
+        }
+
+    </script>
+
+    <style>
+
+        body {
+            background-color: #f1f1f1;
+            padding: 20px;
+            font-family: Arial;
+        }
+
+        /* Center website */
+        .main {
+            margin: auto;
+        }
+
+        .row {
+            margin: 10px 0px;
+        }
+
+        /* Create three equal columns that floats next to each other */
+        .column {
+            float: left;
+            width: 350px;
+            height: 310px;
+            border: 2px solid #ddd;
+            background-color: #fff;
+            text-align: center;
+            text-decoration: none;
+            display: none;
+        }
+
+        /* Clear floats after rows */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Content */
+        .content {
+            background-color: white;
+            text-align: center;
+        }
+
+        .content h4, .content a {
+        }
+
+        /* Link*/
+        .galleryGridLink {
+            margin: 25px 15px 0px 15px;
+            display: inline-block;
+            text-align: center;
+            color: #000;
+        }
+
+        /* Style the buttons */
+        .btn {
+            border: none;
+            outline: none;
+            padding: 12px 16px;
+            background-color: white;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .btn:hover {
+            background-color: #ddd;
+        }
+
+        .btn.active {
+            background-color: #000;
+            color: white;
+        }
+
+        /* Animation */
+
+        .show {
+            display: block;
+            -webkit-animation: fadeInFromNone 1.5s ease-out;
+            -moz-animation: fadeInFromNone 1.5s ease-out;
+            -o-animation: fadeInFromNone 1.5s ease-out;
+            animation: fadeInFromNone 1.5s ease-out;
+        }
+
+        @-webkit-keyframes fadeInFromNone {
+            0% {
+                display: none;
+                opacity: 0;
+            }
+            1% {
+                display: block;
+                opacity: 0;
+            }
+            100% {
+                display: block;
+                opacity: 1;
+            }
+        }
+
+        @-moz-keyframes fadeInFromNone {
+            0% {
+                display: none;
+                opacity: 0;
+            }
+            1% {
+                display: block;
+                opacity: 0;
+            }
+            100% {
+                display: block;
+                opacity: 1;
+            }
+        }
+
+        @-o-keyframes fadeInFromNone {
+            0% {
+                display: none;
+                opacity: 0;
+            }
+            1% {
+                display: block;
+                opacity: 0;
+            }
+            100% {
+                display: block;
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInFromNone {
+            0% {
+                display: none;
+                opacity: 0;
+            }
+            1% {
+                display: block;
+                opacity: 0;
+            }
+            100% {
+                display: block;
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main">
+    <div id="clearJSgalleryBtnContainer">
+    </div>
+    <div class="row" id="clearJSgalleryRowContainer">
+    </div>
+</div>
+
+<script>
+
+    function clearJsGallery(galleryGridSettings, settings) {
+        let me = this;
+        settings = settings || {};
+        this.settings = {
+            multiSelection: settings.multiSelection || true,
+            imageLink: settings.imageLink || true,
+            showTextLink: settings.showTextLink || true,
+            allBtnText: settings.allBtnText || 'All',
+            selectType: settings.selectType || 'AND', // ALL
+            btnContainerID: settings.btnContainerID || 'clearJSgalleryBtnContainer',
+            rowContainerID: settings.rowContainerID || 'clearJSgalleryRowContainer',
+            imagesDir: settings.imagesDir || 'images/'
+        };
+
+        this.btnList = [this.settings.allBtnText];
+        this.galleryGridSettings = galleryGridSettings;
+        this.imagesDir = this.settings.imagesDir;
+        this.btnContainer = document.getElementById(this.settings.btnContainerID);
+        this.rowContaine = document.getElementById(this.settings.rowContainerID);
+        this.run = function () {
+            this.parseGalleryGridSettings(this.galleryGridSettings);
+            this.addBtn();
+
+            let allBtn = document.getElementsByClassName("btn")[0];
+            allBtn.click();
+
+        };
+        this.parseGalleryGridSettings = function (galleryGridSettings) {
+            for (let key in galleryGridSettings) {
+                this.parseGalleryBtn(galleryGridSettings[key]['hashtag']);
+                let galleryElement = document.createElement('div');
+                let hashtagClassList = galleryGridSettings[key]['hashtag'].toString().split(',').join(' ');
+                let name = galleryGridSettings[key]['name'] || '';
+                galleryElement.className = 'column ' + hashtagClassList;
+                let html = '<div class="content ' + hashtagClassList + '">';
+                if (this.settings.imageLink) {
+                    html += '<a alleryGridLink" href="' + galleryGridSettings[key]['link'] + '">';
+                }
+                html += '<img src="' + me.imagesDir + key + '" alt="' + name + '" style="width:100%">';
+                if (this.settings.imageLink) {
+                    html += '</a>';
+                }
+                if (this.settings.showTextLink) {
+                    html += '<a class="galleryGridLink" href="' + galleryGridSettings[key]['link'] + '">' + galleryGridSettings[key]['linkText'] + '</a>';
+                }
+                html += '</div>';
+                galleryElement.innerHTML = html;
+                this.rowContaine.appendChild(galleryElement);
+            }
+        };
+
+        this.parseGalleryBtn = function (hashtagList) {
+            let data = {};
+            this.btnList.concat(hashtagList).forEach(function (item) {
+                data[item] = true;
+            });
+            this.btnList = Object.keys(data);
+        };
+
+        this.addBtn = function () {
+
+            for (let key in this.btnList) {
+                let element = document.createElement('button');
+                element.className = 'btn';
+                element.innerHTML = this.btnList[key];
+                element.onclick = function () {
+                    me.filterSelection(this.innerText, this)
+                };
+                this.btnContainer.appendChild(element);
+            }
+        };
+
+        this.filterSelection = function (c, btn) {
+            let column, btnArray, btnList, selectAll, showImg, i;
+            let btnClassArray = [];
+            let columnClassArray = [];
+
+            column = document.getElementsByClassName("column");
+            btnArray = document.getElementsByClassName("active");
+
+            if (btn) {
+                if (me.settings.multiSelection) {
+                    let classArray = btn.className.split(" ");
+                    if (classArray.indexOf("active") > -1) {
+                        btn.className = btn.className.replace(" active", "");
+                    } else {
+                        btn.className += " active";
+                    }
+                } else {
+                    let current = document.getElementsByClassName("active");
+                    if (current.length) {
+                        current[0].className = current[0].className.replace(" active", "");
+                    }
+                    btn.className += " active";
+                }
+            }
+
+            if (btnArray.length && btnArray[0].textContent == me.settings.allBtnText) {
+                if (btnArray.length == 1 || btn.textContent == me.settings.allBtnText) {
+                    selectAll = true;
+                    btnList = document.getElementsByClassName("btn");
+                    for (i = 0; i < btnList.length; i++) {
+                        if (btnList[i].textContent != me.settings.allBtnText) {
+                            btnList[i].className = btnList[i].className.replace(" active", "");
+                        }
+                    }
+                } else {
+                    btnArray[0].className = btnArray[0].className.replace(" active", "");
+                }
+                btnArray = document.getElementsByClassName("active");
+            }
+
+            for (i = 0; i < btnArray.length; i++) {
+                btnClassArray.push(btnArray[i].textContent);
+            }
+
+            for (i = 0; i < column.length; i++) {
+                me.removeClass(column[i], "show");
+                columnClassArray = column[i].className.split(" ");
+
+                showImg = columnClassArray.filter(function (obj) {
+                    return btnClassArray.indexOf(obj) >= 0;
+                });
+                if (me.settings.selectType == 'ALL') {
+                    if (selectAll || showImg.length > 0) {
+                        me.addClass(column[i], "show");
+                    }
+                } else {
+                    if (selectAll || (showImg.length == btnArray.length && showImg.length > 0)) {
+                        me.addClass(column[i], "show");
+                    }
+                }
+            }
+
+        };
+        this.removeClass = function (element, name) {
+            let i, arr1, arr2;
+            arr1 = element.className.split(" ");
+            arr2 = name.split(" ");
+            for (i = 0; i < arr2.length; i++) {
+                while (arr1.indexOf(arr2[i]) > -1) {
+                    arr1.splice(arr1.indexOf(arr2[i]), 1);
+                }
+            }
+            element.className = arr1.join(" ");
+        };
+
+        this.addClass = function (element, name) {
+            let i, arr1, arr2;
+            arr1 = element.className.split(" ");
+            arr2 = name.split(" ");
+            for (i = 0; i < arr2.length; i++) {
+                if (arr1.indexOf(arr2[i]) == -1) {
+                    element.className += " " + arr2[i];
+                }
+            }
+        };
+        this.run();
+    }
+
+    new clearJsGallery(galleryImagesList);
+
+</script>
+
+</body>
+</html>
