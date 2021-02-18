@@ -2,6 +2,10 @@
 
 ## Image gallery  with hashtags, excluding libraries
 
+## Demo
+
+[https://datorik.github.io/clearJsGallery](https://datorik.github.io/clearJsGallery)
+
 ## Example
 
 ![](examples/Screenshot.png)

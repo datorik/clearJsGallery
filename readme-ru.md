@@ -2,7 +2,11 @@
 
 ## Галерея картинок с хештегами, без использования библиотек
 
-### Пример
+## Пример
+
+[https://datorik.github.io/clearJsGallery](https://datorik.github.io/clearJsGallery/index-ru.html)
+
+### Скриншот
 
 ![](examples/Screenshot.png)
 
@@ -38,9 +42,9 @@ settings
 }
 ```
 
-## License
+## Лицензия
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+Этот проект распространяется под лицензией MIT - подробности в файле [LICENSE](LICENSE)
 
 [English readme](readme.md)
 
