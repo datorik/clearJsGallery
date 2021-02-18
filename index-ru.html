@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style> .main { margin: auto; width: 764px; } .row { margin: 10px 0px; } .column { float: left; width: 250px; height: 240px; border: 2px solid #ddd; background-color: #fff; text-align: center; text-decoration: none; display: none; }  .row:after { content: ""; display: table; clear: both; } .content { background-color: white; text-align: center; } .content h4, .content a { } .galleryGridLink { margin: 25px 15px 0px 15px; display: inline-block; text-align: center; color: #000; } .btn { border: 1px solid #f1f1f1; border-radius: 2px; outline: none; padding: 12px 16px; background-color: white; cursor: pointer; margin-right: 5px; } .btn:hover { background-color: #ddd; } .btn.active { background-color: #000; color: white; } .show { display: block; -webkit-animation: fadeInFromNone 1.5s ease-out; -moz-animation: fadeInFromNone 1.5s ease-out; -o-animation: fadeInFromNone 1.5s ease-out; animation: fadeInFromNone 1.5s ease-out; } @-webkit-keyframes fadeInFromNone { 0% { display: none; opacity: 0; } 1% { display: block; opacity: 0; } 100% { display: block; opacity: 1; } } @-moz-keyframes fadeInFromNone { 0% { display: none; opacity: 0; } 1% { display: block; opacity: 0; } 100% { display: block; opacity: 1; } } @-o-keyframes fadeInFromNone { 0% { display: none; opacity: 0; } 1% { display: block; opacity: 0; } 100% { display: block; opacity: 1; } } @keyframes fadeInFromNone { 0% { display: none; opacity: 0; } 1% { display: block; opacity: 0; } 100% { display: block; opacity: 1; } }
+    h2 {border-bottom: 1px solid #f1f1f1;} .btnMenu { border: 1px solid #f1f1f1; border-radius: 2px; outline: none; padding: 12px 16px; background-color: white; cursor: pointer; margin-right: 5px; text-decoration: none; color: #000; }
+    .code { background-color: #f1f1f1; border: 1px solid #cccccc; border-radius: 5px; } .codeOneLine { padding: 14px}
+    </style>
+</head>
+<body>
+
+
+
+
+
+<div class="main">
+    <h1>Clear JS Hashtag Gallery (clearJsGallery)</h1>
+    <h2>Галерея картинок с хештегами, без использования библиотек</h2>
+    <div>
+        <a class="btnMenu" href="https://github.com/datorik/clearJsGallery"> На GitHub</a>
+        <a class="btnMenu" href="https://github.com/datorik/clearJsGallery/archive/main.zip"> Скачать zip</a>
+        <a class="btnMenu" style="float: right" href="https://datorik.github.io/clearJsGallery/"> English </a>
+    </div>
+    <h2>Пример</h2>
+    <div id="clearJSgalleryBtnContainer">
+    </div>
+    <div class="row" id="clearJSgalleryRowContainer">
+    </div>
+    <br>
+    <h2>Установка</h2>
+    <div class="code codeOneLine">Просто добавьте на страницу стили и функцию clearJsGallery!</div>
+    <h2>Настройка</h2>
+    Init:
+    <div class="code codeOneLine">
+        new clearJsGallery(galleryImagesList, settings);
+    </div>
+    <br>
+    galleryImagesList
+    <div class="code">
+        <pre>
+            <code>
+                'example.jpg': { //Image name
+                    name: 'Example',
+                    linkText: 'example',
+                    link: '/',
+                    hashtag: ['EXAMPLE', 'EXAMPLE2'] // one or more  hashtag
+                }
+            </code>
+         </pre>
+    </div>
+    <br>
+    settings
+    <div class="code">
+        <pre>
+            <code>
+                {
+                    multiSelection: true,
+                    imageLink: true,
+                    showTextLink: true,
+                    allBtnText: 'All', // all button text
+                    selectType: 'AND', // 'AND' or 'ALL'
+                    btnContainerID: 'clearJSgalleryBtnContainer', // button container ID
+                    rowContainerID: 'clearJSgalleryRowContainer', // gallery container ID
+                    imagesDir: 'images/' // images directory
+                }
+            </code>
+        </pre>
+    </div>
+    <h2>Лицензия </h2>
+    Этот проект распространяется под лицензией MIT - подробности в файле <a href="LICENSE"> LICENSE</a>
+</div>
+
+<script>
+    function clearJsGallery(t,e){var m=this;e=e||{},this.settings={multiSelection:void 0===e.multiSelection||e.multiSelection,imageLink:void 0===e.imageLink||e.imageLink,showTextLink:void 0===e.showTextLink||e.showTextLink,allBtnText:e.allBtnText||"All",selectType:e.selectType||"AND",btnContainerID:e.btnContainerID||"clearJSgalleryBtnContainer",rowContainerID:e.rowContainerID||"clearJSgalleryRowContainer",imagesDir:e.imagesDir||"images/"},this.btnList=[this.settings.allBtnText],this.galleryGridSettings=t,this.imagesDir=this.settings.imagesDir,this.btnContainer=document.getElementById(this.settings.btnContainerID),this.rowContaine=document.getElementById(this.settings.rowContainerID),this.run=function(){this.parseGalleryGridSettings(this.galleryGridSettings),this.addBtn();let t=document.getElementsByClassName("btn")[0];t.click()},this.parseGalleryGridSettings=function(n){for(var i in n){this.parseGalleryBtn(n[i].hashtag);let t=document.createElement("div");var s=n[i].hashtag.toString().split(",").join(" "),l=n[i].name||"";t.className="column "+s;let e='<div class="content '+s+'">';this.settings.imageLink&&(e+='<a alleryGridLink" href="'+n[i].link+'">'),e+='<img src="'+m.imagesDir+i+'" alt="'+l+'" style="width:100%">',this.settings.imageLink&&(e+="</a>"),this.settings.showTextLink&&(e+='<a class="galleryGridLink" href="'+n[i].link+'">'+n[i].linkText+"</a>"),e+="</div>",t.innerHTML=e,this.rowContaine.appendChild(t)}},this.parseGalleryBtn=function(t){let e={};this.btnList.concat(t).forEach(function(t){e[t]=!0}),this.btnList=Object.keys(e)},this.addBtn=function(){for(var e in this.btnList){let t=document.createElement("button");t.className="btn",t.innerHTML=this.btnList[e],t.onclick=function(){m.filterSelection(this.innerText,this)},this.btnContainer.appendChild(t)}},this.filterSelection=function(t,e){let n,i,s,l,a,c,o=[],r=[];if(n=document.getElementsByClassName("column"),i=document.getElementsByClassName("active"),e)if(m.settings.multiSelection){let t=e.className.split(" ");-1<t.indexOf("active")?e.className=e.className.replace(" active",""):e.className+=" active"}else{let t=document.getElementsByClassName("active");t.length&&(t[0].className=t[0].className.replace(" active","")),e.className+=" active"}if(i.length&&i[0].textContent==m.settings.allBtnText){if(1==i.length||e.textContent==m.settings.allBtnText)for(l=!0,s=document.getElementsByClassName("btn"),c=0;c<s.length;c++)s[c].textContent!=m.settings.allBtnText&&(s[c].className=s[c].className.replace(" active",""));else i[0].className=i[0].className.replace(" active","");i=document.getElementsByClassName("active")}for(c=0;c<i.length;c++)o.push(i[c].textContent);for(c=0;c<n.length;c++)m.removeClass(n[c],"show"),r=n[c].className.split(" "),a=r.filter(function(t){return 0<=o.indexOf(t)}),"ALL"==m.settings.selectType?(l||0<a.length)&&m.addClass(n[c],"show"):(l||a.length==i.length&&0<a.length)&&m.addClass(n[c],"show")},this.removeClass=function(t,e){let n,i,s;for(i=t.className.split(" "),s=e.split(" "),n=0;n<s.length;n++)for(;-1<i.indexOf(s[n]);)i.splice(i.indexOf(s[n]),1);t.className=i.join(" ")},this.addClass=function(t,e){let n,i,s;for(i=t.className.split(" "),s=e.split(" "),n=0;n<s.length;n++)-1==i.indexOf(s[n])&&(t.className+=" "+s[n])},this.run()}
+    let galleryImagesList = {
+        'car_1.jpg': {
+            name: 'Car 1',
+            linkText: 'Car 1 link',
+            link: 'https://datorik.github.io/clearJsGallery/',
+            hashtag: ['CAR']
+        },
+        'car_2.jpg': {
+            name: 'Car 2',
+            linkText: 'Car 2 link',
+            link: 'https://datorik.github.io/clearJsGallery/',
+            hashtag: ['CAR']
+        },
+        'car_3.jpg': {
+            name: 'Car 3',
+            linkText: 'Car 3 link',
+            link: 'https://datorik.github.io/clearJsGallery/',
+            hashtag: ['CAR', 'ROAD']
+        },
+        'road_1.jpg': {
+            name: 'Road 1',
+            linkText: 'Road 1 link',
+            link: 'https://datorik.github.io/clearJsGallery/',
+            hashtag: ['ROAD']
+        },
+        'road_2.jpg': {
+            name: 'Road 2',
+            linkText: 'Road 2 link',
+            link: 'https://datorik.github.io/clearJsGallery/',
+            hashtag: ['CAR', 'ROAD']
+        },
+        'forest_1.jpg': {
+            name: 'Forest 1',
+            linkText: 'Forest 1 link',
+            link: 'https://datorik.github.io/clearJsGallery/',
+            hashtag: ['FOREST']
+        },
+        'forest_2.jpg': {
+            name: 'Forest 3',
+            linkText: 'Forest 2 link',
+            link: 'https://datorik.github.io/clearJsGallery/',
+            hashtag: ['FOREST', 'CAR', 'ROAD']
+        },
+        'forest_3.jpg': {
+            name: 'Forest 3',
+            linkText: 'Forest 3 link',
+            link: 'https://datorik.github.io/clearJsGallery/',
+            hashtag: ['FOREST', 'CAR', 'ROAD']
+        }
+    };
+    let settings = {
+        imageLink: false
+    };
+
+    new clearJsGallery(galleryImagesList, settings);
+
+</script>
+
+</body>
+</html>
