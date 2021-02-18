@@ -179,9 +179,9 @@
         let me = this;
         settings = settings || {};
         this.settings = {
-            multiSelection: settings.multiSelection || true,
-            imageLink: settings.imageLink || true,
-            showTextLink: settings.showTextLink || true,
+            multiSelection: settings.multiSelection !== undefined ? settings.multiSelection : true,
+            imageLink: settings.imageLink !== undefined ? settings.imageLink : true,
+            showTextLink: settings.showTextLink !== undefined ? settings.showTextLink : true,
             allBtnText: settings.allBtnText || 'All',
             selectType: settings.selectType || 'AND', // ALL
             btnContainerID: settings.btnContainerID || 'clearJSgalleryBtnContainer',
